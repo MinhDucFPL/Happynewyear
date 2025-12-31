@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Our Love Story • Since 22/07</title>
+
+  <!-- ================= FONTS ================= -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+  /* ================= DESIGN SYSTEM ================= */
+  :root {
+    --bg-dark: #05010d;
+    --glass-bg: rgba(20,16,40,0.55);
+    --glass-border: rgba(255,255,255,0.28);
+    --accent: #ff9a9e;
+
+    --radius-md: 18px;
+    --radius-lg: 26px;
+
+    --blur-strong: 26px;
+    --blur-soft: 10px;
+
+    --font-sub: clamp(0.95rem, 3.5vw, 1.05rem);
+    --font-title: clamp(1.6rem, 5vw, 2.2rem);
+
+    --t-base: 0.8s ease;
+    --t-slow: 1.6s ease;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: var(--bg-dark);
+    color: #fff;
+    overflow: hidden;
+  }
+
+  /* ================= BACKGROUND ================= */
+  #bg {
+    position: fixed;
+    inset: 0;
+    z-index: -3;
+    background-size: cover;
+    background-position: center;
+    filter: blur(var(--blur-strong)) brightness(0.55);
+    transform: scale(1.1);
+    transition: background-image 1.8s ease;
+  }
+
+  /* ================= MAIN IMAGE ================= */
+  #stage {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  #stage img {
+    max-width: 92vw;
+    max-height: 88svh;
+    object-fit: contain;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 40px 120px rgba(0,0,0,0.7);
+    opacity: 0;
+    transform: scale(0.98);
+    transition: opacity var(--t-slow), transform var(--t-slow);
+  }
+
+  #stage img.active { opacity: 1; transform: scale(1); }
+
+  /* ================= ANNIVERSARY ================= */
+  .anniversary {
+    position: fixed;
+    top: calc(env(safe-area-inset-top) + 18px);
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Playfair Display', serif;
+    font-size: var(--font-title);
+    letter-spacing: 1px;
+    padding: 8px 18px;
+    border-radius: 999px;
+    background: rgba(0,0,0,0.35);
+    backdrop-filter: blur(var(--blur-soft));
+    border: 1px solid var(--glass-border);
+    opacity: 0;
+    transition: opacity var(--t-slow);
+    z-index: 5;
+  }
+  .anniversary.show { opacity: 1; }
+
+  /* ================= SUBTITLE ================= */
+  .subtitle-wrap {
+    position: fixed;
+    left: 50%;
+    bottom: calc(env(safe-area-inset-bottom) + 22px);
+    transform: translateX(-50%);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    pointer-events: none;
+    z-index: 4;
+  }
+
+  .subtitle-box {
+    max-width: min(92vw, 560px);
+    padding: 12px 16px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--blur-soft));
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+  }
+
+  .subtitle-line {
+    font-size: var(--font-sub);
+    line-height: 1.6;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity var(--t-base), transform var(--t-base);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .subtitle-line.show { opacity: 1; transform: translateY(0); }
+  .subtitle-line.exit { opacity: 0; transform: translateY(-6px); }
+
+  /* ================= MUSIC ================= */
+  .music-btn {
+    position: fixed;
+    top: calc(env(safe-area-inset-top) + 18px);
+    right: 18px;
+    padding: 10px 18px;
+    border-radius: 999px;
+    background: rgba(0,0,0,0.45);
+    backdrop-filter: blur(var(--blur-soft));
+    border: 1px solid var(--glass-border);
+    cursor: pointer;
+    font-size: 0.9rem;
+    z-index: 6;
+  }
+
+  /* ================= HEART ================= */
+  .heart {
+    position: fixed;
+    bottom: -20px;
+    animation: fly 7s linear forwards;
+    pointer-events: none;
+    z-index: 3;
+  }
+  @keyframes fly { to { transform: translateY(-120vh) scale(1.6); opacity: 0; } }
+
+  /* ================= LOCK ================= */
+  #lock {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(145deg, #2f1c6b, #0b0320);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 14px;
+    text-align: center;
+    z-index: 9999;
+  }
+
+  #lock h2 { font-family: 'Playfair Display', serif; font-size: 2.2rem; margin: 0; }
+  #lock input { padding: 14px 18px; border-radius: 999px; border: none; font-size: 1rem; text-align: center; width: 220px; }
+  #lock button { padding: 12px 30px; border-radius: 999px; border: none; background: linear-gradient(135deg, var(--accent), #fad0c4); font-size: 1rem; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+<div id="bg"></div>
+<div id="stage"></div>
+
+<div class="anniversary" id="anniversary">Since 22/07 • The day we began</div>
+
+<div class="subtitle-wrap"><div class="subtitle-box"><div class="subtitle-line" id="subtitle"></div></div></div>
+
+<audio id="music" loop preload="auto" playsinline><source src="music.mp3" type="audio/mpeg" /></audio>
+<div class="music-btn" id="musicToggle">🔊 Music</div>
+
+<div id="lock"><h2>🔒 Ngày chúng ta bắt đầu</h2><input id="pass" placeholder="22/07" /><button id="unlockBtn">Mở khoá 💖</button></div>
+
+<script>
+/* ================= CONFIG ================= */
+const PASSWORD = '22/07';
+const MAX_INDEX = 76; // SỐ ẢNH THẬT
+const EXTENSIONS = ['jpg','png','JPG','PNG'];
+
+/* ================= SUBTITLE ================= */
+const subtitles = [
+  'Gửi em – người đã bước vào cuộc đời anh từ ngày 22/07.',
+  'Một năm qua, anh và em đã đi cùng nhau qua rất nhiều khoảnh khắc.',
+  'Có những ngày rất vui, có những ngày mệt mỏi, có lúc cười thật nhiều và cũng có lúc im lặng rất lâu.',
+  'Nhưng điều quan trọng nhất là: chúng ta chưa từng rời khỏi nhau.',
+  'Web này không phải để khoe những khoảnh khắc hoàn hảo.',
+  'Mà để nhắc anh nhớ rằng từng tấm ảnh ở đây đều là một mảnh ký ức rất trân trọng.',
+  'Vì trong đó luôn có anh và em.',
+  'Bước sang năm mới, anh không mong mọi thứ sẽ luôn dễ dàng.',
+  'Anh chỉ mong rằng dù có chuyện gì xảy ra, chúng ta vẫn chọn ở lại bên nhau.',
+  'Vẫn nắm tay nhau đi tiếp, chậm cũng được, miễn là cùng nhau.',
+  'Chúc mừng năm mới, em yêu.',
+  'Cảm ơn em vì đã là một phần trong hành trình của anh.',
+  'Và anh hy vọng rằng những trang tiếp theo…',
+  'Vẫn luôn có tên của hai đứa mình. 🤍'
+];
+
+const subtitleEl = document.getElementById('subtitle');
+let subtitleIndex = 0;
+function playSubtitle() {
+  subtitleEl.classList.remove('show');
+  subtitleEl.classList.add('exit');
+  setTimeout(() => {
+    subtitleEl.classList.remove('exit');
+    subtitleEl.textContent = subtitles[subtitleIndex % subtitles.length];
+    subtitleEl.classList.add('show');
+    subtitleIndex++;
+  }, 500);
+}
+
+/* ================= IMAGE ENGINE (FIX DUPLICATE) ================= */
+const bg = document.getElementById('bg');
+const stage = document.getElementById('stage');
+let slides = [];
+let imgIndex = 0;
+let ready = false;
+
+async function loadImages() {
+  const added = new Set();
+  for (let i = 1; i <= MAX_INDEX; i++) {
+    for (const ext of EXTENSIONS) {
+      const src = `images/${i}.${ext}`;
+      try {
+        const res = await fetch(src, { method: 'HEAD' });
+        if (res.ok && !added.has(i)) {
+          slides.push(src);
+          added.add(i); // CHỈ 1 ẢNH / 1 INDEX
+          break;
+        }
+      } catch (e) {}
+    }
+  }
+  ready = true;
+}
+
+function showNextImage() {
+  if (!ready || slides.length === 0) return;
+  const src = slides[imgIndex % slides.length];
+  bg.style.backgroundImage = `url(${src})`;
+  const img = document.createElement('img');
+  img.src = src;
+  stage.innerHTML = '';
+  stage.appendChild(img);
+  requestAnimationFrame(() => img.classList.add('active'));
+  imgIndex++;
+}
+
+/* ================= MUSIC ================= */
+const music = document.getElementById('music');
+const musicToggle = document.getElementById('musicToggle');
+music.volume = 0.8;
+musicToggle.onclick = () => {
+  if (music.paused) {
+    music.play(); musicToggle.textContent = '🔊 Music';
+  } else {
+    music.pause(); musicToggle.textContent = '🔇 Music';
+  }
+};
+
+/* ================= LOCK ================= */
+const lock = document.getElementById('lock');
+const unlockBtn = document.getElementById('unlockBtn');
+const anniversary = document.getElementById('anniversary');
+
+unlockBtn.onclick = async () => {
+  if (document.getElementById('pass').value !== PASSWORD) {
+    alert('Sai ngày rồi 😝'); return;
+  }
+  lock.style.display = 'none';
+  anniversary.classList.add('show');
+  music.play().catch(()=>{});
+
+  await loadImages();
+  showNextImage();
+  setInterval(showNextImage, 3000);
+
+  playSubtitle();
+  setInterval(playSubtitle, 5000);
+};
+
+/* ================= HEART ================= */
+setInterval(() => {
+  const h = document.createElement('div');
+  h.className = 'heart';
+  h.innerText = '❤️';
+  h.style.left = Math.random() * 100 + 'vw';
+  h.style.fontSize = 16 + Math.random() * 26 + 'px';
+  document.body.appendChild(h);
+  setTimeout(() => h.remove(), 7000);
+}, 1400);
+</script>
+
+</body>
+</html>
